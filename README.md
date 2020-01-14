@@ -3,13 +3,13 @@ game
 
 This project implements the game of Breakout.
 
-Name: 
+Name: Andrew Krier
 
 ### Timeline
 
-Start Date: 
+Start Date: 01/09/20
 
-Finish Date: 
+Finish Date: 01/19/20
 
 Hours Spent:
 
