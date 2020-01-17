@@ -1,4 +1,4 @@
 package breakout;
 
-public class Rect {
+public class Ball {
 }

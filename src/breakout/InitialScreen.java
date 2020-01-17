@@ -11,8 +11,8 @@ public class InitialScreen extends Application {
 
     private Scene myScene;
     public static final String TITLE = "Fight!";
-    public static final int SCREEN_WIDTH = 1080;
-    public static final int SCREEN_HEIGHT = 1920;
+    public static final int SCREEN_WIDTH = 432;
+    public static final int SCREEN_HEIGHT = 768;
     public static final Paint BACKGROUND = Color.DARKGRAY;
 
     @Override
