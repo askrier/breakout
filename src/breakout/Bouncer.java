@@ -1,4 +1,7 @@
 package breakout;
 
-public class Bouncer {
+import javafx.scene.shape.Rectangle;
+
+public class Bouncer extends Rectangle {
+
 }
