@@ -4,11 +4,12 @@ import javafx.scene.shape.Rectangle;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Shape;
 
 public class Block extends Rectangle {
 
     public static final int MAX_DUR = 5;
-    public static int dur;
+    public int dur;
 
     public static final int SCREEN_WIDTH = 432;
     public static final int SCREEN_HEIGHT = 768;
@@ -28,6 +29,19 @@ public class Block extends Rectangle {
     public void damage(){
         dur--;
         this.setFill(DURABILITY_COLOR[dur]);
+    }
+
+    public void ballCollision(Ball ball) {
+        Shape intersection = Shape.intersect(this, ball);
+        if(intersection.getBoundsInLocal().getWidth() != -1){
+            if(this.getX() <= ball.getCenterX() && ball.getCenterX()<= (this.getX() + BLOCK_WIDTH)){
+                ball.setYSpeed(ball.getYSpeed() * -1);
+            } else {
+                ball.setXSpeed(ball.getXSpeed() * -1);
+            }
+
+            this.damage();
+        }
     }
 
 }

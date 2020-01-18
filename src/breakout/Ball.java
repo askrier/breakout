@@ -1,12 +1,13 @@
 package breakout;
 
+import javafx.scene.shape.Shape;
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class Ball extends Circle {
 
-    private int mySpeed;
+    private float mySpeed;
     private float myXSpeed;
     private float myYSpeed;
     public static final int BALL_SIZE = 5;
@@ -18,7 +19,7 @@ public class Ball extends Circle {
         myYSpeed = 75;
     }
 
-    public int getSpeed() {
+    public float getSpeed() {
         return mySpeed;
     }
 
@@ -30,7 +31,7 @@ public class Ball extends Circle {
         return myXSpeed;
     }
 
-    public void setXSpeed(int speed) {
+    public void setXSpeed(float speed) {
         myXSpeed = speed;
     }
 
@@ -38,13 +39,20 @@ public class Ball extends Circle {
         return myYSpeed;
     }
 
-    public void setYSpeed(int speed) {
+    public void setYSpeed(float speed) {
         myYSpeed = speed;
     }
 
     public void sideWallCollisions() {
         if(this.getCenterX() <= BALL_SIZE || this.getCenterX() >= InitialScreen.SCREEN_WIDTH - BALL_SIZE){
             myXSpeed *= -1;
+        }
+    }
+
+    public void paddleCollision(Bouncer bounce) {
+        Shape intersection = Shape.intersect(this, bounce);
+        if(intersection.getBoundsInLocal().getWidth() != -1){
+            myYSpeed *= -1;
         }
     }
 

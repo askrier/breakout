@@ -63,33 +63,18 @@ public class InitialScreen extends Application {
         Group root = new Group();
 
         myBlock0 = new Block(0, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 3);
-        myBlock0.setFill(Color.RED);
-
         myBlock1 = new Block(1, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 3);
-        myBlock1.setFill(Color.ORANGE);
-
-        myBlock2 = new Block(2, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 3);
-        myBlock2.setFill(Color.YELLOW);
-
-        myBlock3 = new Block(3, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 3);
-        myBlock3.setFill(Color.GREEN);
-
-        myBlock4 = new Block(4, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 3);
-        myBlock4.setFill(Color.BLUE);
-
-        myBlock5 = new Block(5, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 3);
-        myBlock5.setFill(Color.INDIGO);
-
+        myBlock2 = new Block(2, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 4);
+        myBlock3 = new Block(3, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 5);
+        myBlock4 = new Block(4, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 5);
+        myBlock5 = new Block(5, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 4);
         myBlock6 = new Block(6, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 3);
-        myBlock6.setFill(Color.VIOLET);
-
         myBlock7 = new Block(7, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 3);
-        myBlock7.setFill(Color.PINK);
 
-        myBouncer = new Bouncer(SCREEN_WIDTH/2 - BLOCK_WIDTH/2, BLOCK_HEIGHT*47, BLOCK_WIDTH, BLOCK_HEIGHT, false);
+        myBouncer = new Bouncer(SCREEN_WIDTH/2 - BLOCK_WIDTH/2, BLOCK_HEIGHT*47, BLOCK_WIDTH, BLOCK_HEIGHT / 2, false);
         myBouncer.setFill(Color.BLACK);
 
-        myRoamer = new Bouncer(SCREEN_WIDTH/2 - BLOCK_WIDTH/2, BLOCK_HEIGHT*46, BLOCK_WIDTH, BLOCK_HEIGHT, true);
+        myRoamer = new Bouncer(SCREEN_WIDTH/2 - BLOCK_WIDTH/2, BLOCK_HEIGHT*46, BLOCK_WIDTH, BLOCK_HEIGHT / 2, true);
         myRoamer.setFill(Color.BLACK);
 
         myBall = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
@@ -116,6 +101,18 @@ public class InitialScreen extends Application {
     private void step (double elapsedTime){
         myBall.setCenterY(myBall.getCenterY() + myBall.getYSpeed() * elapsedTime);
         myBall.setCenterX(myBall.getCenterX() + myBall.getXSpeed() * elapsedTime);
+
+        myBall.paddleCollision(myBouncer);
+        myBall.paddleCollision(myRoamer);
+
+        myBlock0.ballCollision(myBall);
+        myBlock1.ballCollision(myBall);
+        myBlock2.ballCollision(myBall);
+        myBlock3.ballCollision(myBall);
+        myBlock4.ballCollision(myBall);
+        myBlock5.ballCollision(myBall);
+        myBlock6.ballCollision(myBall);
+        myBlock7.ballCollision(myBall);
 
         myBall.sideWallCollisions();
     }
