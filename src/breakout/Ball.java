@@ -8,7 +8,7 @@ import javafx.scene.paint.Paint;
 
 public class Ball extends Circle {
 
-    private float mySpeed = 10;
+    private float mySpeed = 24;
     private float myXSpeed;
     private float myYSpeed;
     private boolean hasStart;
@@ -74,6 +74,11 @@ public class Ball extends Circle {
             } else if (code == KeyCode.LEFT) {
                 this.setCenterX(this.getCenterX() - mySpeed);
             }
+        }
+
+        if (code == KeyCode.V) {
+            myYSpeed = -500;
+            myXSpeed = 500;
         }
     }
 

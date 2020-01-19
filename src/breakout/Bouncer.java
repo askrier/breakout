@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 
 public class Bouncer extends Rectangle {
 
-    private int mySpeed = 10;
+    private int mySpeed = 24;
     private boolean roam;
     private boolean team;
 

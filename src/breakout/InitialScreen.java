@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class InitialScreen extends Application {
 
     private Scene myScene;
+    private Level currLevel;
     public static final String TITLE = "Fight!";
     public static final int SCREEN_WIDTH = 432;
     public static final int SCREEN_HEIGHT = 768;
@@ -31,15 +32,7 @@ public class InitialScreen extends Application {
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-    private Block myBlock0;
-    private Block myBlock1;
-    private Block myBlock2;
-    private Block myBlock3;
-    private Block myBlock4;
-    private Block myBlock5;
-    private Block myBlock6;
-    private Block myBlock7;
-
+    /*
     private ArrayList<Block> team1 = new ArrayList<>();
     private ArrayList<Block> team2 = new ArrayList<>();
     private int[][] lvlOneTeamOne = {
@@ -60,6 +53,7 @@ public class InitialScreen extends Application {
     private Bouncer myRoamer0;
     private Bouncer myBouncer1;
     private Bouncer myRoamer1;
+    */
 
     @Override
     public void start (Stage stage) {
@@ -78,8 +72,10 @@ public class InitialScreen extends Application {
 
     private Scene setupGame (int width, int height, Paint background){
 
-        Group root = new Group();
+        currLevel = new Level(1);
 
+        Group root = currLevel.LevelBegin();
+/*
         for(int i = 0; i < lvlOneTeamOne.length; i++){
             for(int j = 0; j < lvlOneTeamOne[i].length; j++){
                 team1.add(new Block(j, 36 - i, BLOCK_WIDTH, BLOCK_HEIGHT, lvlOneTeamOne[i][j]));
@@ -109,7 +105,7 @@ public class InitialScreen extends Application {
         root.getChildren().add(myBouncer1);
         root.getChildren().add(myRoamer1);
         root.getChildren().add(myBall);
-
+*/
         Scene scene = new Scene(root, width, height, background);
 
         scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
@@ -118,6 +114,9 @@ public class InitialScreen extends Application {
     }
 
     private void step (double elapsedTime){
+
+        currLevel.levelStep(elapsedTime);
+        /*
         myBall.setCenterY(myBall.getCenterY() + myBall.getYSpeed() * elapsedTime);
         myBall.setCenterX(myBall.getCenterX() + myBall.getXSpeed() * elapsedTime);
 
@@ -133,15 +132,33 @@ public class InitialScreen extends Application {
 
         myBall.sideWallCollisions();
 
+
+        if(myBall.getCenterY() <= 0){
+            for(int i = 0; i < team1.size(); i++){
+                team2.get(i).damage();
+            }
+        } else if (myBall.getCenterY() >= SCREEN_HEIGHT){
+            for(int i = 0; i < team2.size(); i++){
+                team1.get(i).damage();
+            }
+        }
+
         myBall.offScreen();
+
+         */
     }
 
     private void handleKeyInput(KeyCode code) {
+
+        currLevel.keyInput(code);
+        /*
         myBouncer0.handleKeys(code);
         myRoamer0.handleKeys(code);
         myBouncer1.handleKeys(code);
         myRoamer1.handleKeys(code);
         myBall.handleKeys(code);
+
+         */
     }
 
     public static void main (String[] args) { launch(args); }

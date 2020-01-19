@@ -27,8 +27,10 @@ public class Block extends Rectangle {
     }
 
     public void damage(){
-        dur--;
-        this.setFill(DURABILITY_COLOR[dur]);
+        if(dur != 0) {
+            dur--;
+            this.setFill(DURABILITY_COLOR[dur]);
+        }
     }
 
     public void ballCollision(Ball ball) {
