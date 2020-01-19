@@ -15,6 +15,8 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class InitialScreen extends Application {
 
     private Scene myScene;
@@ -38,10 +40,26 @@ public class InitialScreen extends Application {
     private Block myBlock6;
     private Block myBlock7;
 
+    private ArrayList<Block> team1 = new ArrayList<>();
+    private ArrayList<Block> team2 = new ArrayList<>();
+    private int[][] lvlOneTeamOne = {
+            {2, 1, 4, 3, 3, 4, 1, 2},
+            {1, 4, 3, 2, 2, 3, 4, 1},
+            {4, 3, 2, 1, 1, 2, 3, 4}
+    };
+
+    private int[][] lvlOneTeamTwo = {
+            {4, 3, 2, 1, 1, 2, 3, 4},
+            {1, 4, 3, 2, 2, 3, 4, 1},
+            {2, 1, 4, 3, 3, 4, 1, 2}
+    };
+
     private Ball myBall;
 
-    private Bouncer myBouncer;
-    private Bouncer myRoamer;
+    private Bouncer myBouncer0;
+    private Bouncer myRoamer0;
+    private Bouncer myBouncer1;
+    private Bouncer myRoamer1;
 
     @Override
     public void start (Stage stage) {
@@ -62,33 +80,34 @@ public class InitialScreen extends Application {
 
         Group root = new Group();
 
-        myBlock0 = new Block(0, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 3);
-        myBlock1 = new Block(1, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 3);
-        myBlock2 = new Block(2, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 4);
-        myBlock3 = new Block(3, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 5);
-        myBlock4 = new Block(4, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 5);
-        myBlock5 = new Block(5, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 4);
-        myBlock6 = new Block(6, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 3);
-        myBlock7 = new Block(7, 1, BLOCK_WIDTH, BLOCK_HEIGHT, 3);
+        for(int i = 0; i < lvlOneTeamOne.length; i++){
+            for(int j = 0; j < lvlOneTeamOne[i].length; j++){
+                team1.add(new Block(j, 36 - i, BLOCK_WIDTH, BLOCK_HEIGHT, lvlOneTeamOne[i][j]));
+                team2.add(new Block(j, 12 - i, BLOCK_WIDTH, BLOCK_HEIGHT, lvlOneTeamTwo[i][j]));
+            }
+        }
 
-        myBouncer = new Bouncer(SCREEN_WIDTH/2 - BLOCK_WIDTH/2, BLOCK_HEIGHT*47, BLOCK_WIDTH, BLOCK_HEIGHT / 2, false);
-        myBouncer.setFill(Color.BLACK);
+        myBouncer0 = new Bouncer(SCREEN_WIDTH/2 - BLOCK_WIDTH/2, BLOCK_HEIGHT*47, BLOCK_WIDTH, BLOCK_HEIGHT / 2, false, true);
+        myBouncer0.setFill(Color.BLACK);
 
-        myRoamer = new Bouncer(SCREEN_WIDTH/2 - BLOCK_WIDTH/2, BLOCK_HEIGHT*46, BLOCK_WIDTH, BLOCK_HEIGHT / 2, true);
-        myRoamer.setFill(Color.BLACK);
+        myRoamer0 = new Bouncer(SCREEN_WIDTH/2 - BLOCK_WIDTH/2, BLOCK_HEIGHT*46, BLOCK_WIDTH, BLOCK_HEIGHT / 2, true, true);
+        myRoamer0.setFill(Color.BLACK);
+
+        myBouncer1 = new Bouncer(SCREEN_WIDTH/2 - BLOCK_WIDTH/2, BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT / 2, false, false);
+        myBouncer1.setFill(Color.BLACK);
+
+        myRoamer1 = new Bouncer(SCREEN_WIDTH/2 - BLOCK_WIDTH/2, BLOCK_HEIGHT*2, BLOCK_WIDTH, BLOCK_HEIGHT / 2, true, false);
+        myRoamer1.setFill(Color.BLACK);
 
         myBall = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
-        root.getChildren().add(myBlock0);
-        root.getChildren().add(myBlock1);
-        root.getChildren().add(myBlock2);
-        root.getChildren().add(myBlock3);
-        root.getChildren().add(myBlock4);
-        root.getChildren().add(myBlock5);
-        root.getChildren().add(myBlock6);
-        root.getChildren().add(myBlock7);
-        root.getChildren().add(myBouncer);
-        root.getChildren().add(myRoamer);
+        root.getChildren().addAll(team1);
+        root.getChildren().addAll(team2);
+
+        root.getChildren().add(myBouncer0);
+        root.getChildren().add(myRoamer0);
+        root.getChildren().add(myBouncer1);
+        root.getChildren().add(myRoamer1);
         root.getChildren().add(myBall);
 
         Scene scene = new Scene(root, width, height, background);
@@ -102,24 +121,27 @@ public class InitialScreen extends Application {
         myBall.setCenterY(myBall.getCenterY() + myBall.getYSpeed() * elapsedTime);
         myBall.setCenterX(myBall.getCenterX() + myBall.getXSpeed() * elapsedTime);
 
-        myBall.paddleCollision(myBouncer);
-        myBall.paddleCollision(myRoamer);
+        myBall.paddleCollision(myBouncer0);
+        myBall.paddleCollision(myRoamer0);
+        myBall.paddleCollision(myBouncer1);
+        myBall.paddleCollision(myRoamer1);
 
-        myBlock0.ballCollision(myBall);
-        myBlock1.ballCollision(myBall);
-        myBlock2.ballCollision(myBall);
-        myBlock3.ballCollision(myBall);
-        myBlock4.ballCollision(myBall);
-        myBlock5.ballCollision(myBall);
-        myBlock6.ballCollision(myBall);
-        myBlock7.ballCollision(myBall);
+        for(int i = 0; i < team1.size(); i++){
+            team1.get(i).ballCollision(myBall);
+            team2.get(i).ballCollision(myBall);
+        }
 
         myBall.sideWallCollisions();
+
+        myBall.offScreen();
     }
 
     private void handleKeyInput(KeyCode code) {
-        myBouncer.handleKeys(code);
-        myRoamer.handleKeys(code);
+        myBouncer0.handleKeys(code);
+        myRoamer0.handleKeys(code);
+        myBouncer1.handleKeys(code);
+        myRoamer1.handleKeys(code);
+        myBall.handleKeys(code);
     }
 
     public static void main (String[] args) { launch(args); }
