@@ -4,13 +4,12 @@ import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
 public class Level {
 
-    public int number;
+    public int round;
     private int[] wins = {0, 0};
     private int newLevel = 0;
     private final int DOUBLE_SPEED = 48;
@@ -69,29 +68,31 @@ public class Level {
     private Bouncer myRoamer1;
 
     public Level (int level) {
-        number = level;
+        round = level;
     }
 
     public Level (int level, int winsOne, int winsTwo) {
-        number = level;
+        round = level;
         wins[0] = winsOne;
         wins[1] = winsTwo;
     }
 
     public Group LevelBegin() {
 
-        if(number == 0) return beginGame();
+        if(round == 0) return beginGame();
 
-        if(number == 4) return endOfGame();
+        if(round == 4) return endOfGame();
 
         Group root = new Group();
 
         for(int i = 0; i < fullLvl[0][0].length; i++){
             for(int j = 0; j < fullLvl[0][0][i].length; j++){
-                team1.add(new Block(j, 36 - i, BLOCK_WIDTH, BLOCK_HEIGHT, fullLvl[this.number - 1][0][i][j]));
-                team2.add(new Block(j, 12 - i, BLOCK_WIDTH, BLOCK_HEIGHT, fullLvl[this.number - 1][1][i][j]));
+                team1.add(new Block(j, 36 - i, BLOCK_WIDTH, BLOCK_HEIGHT, fullLvl[this.round - 1][0][i][j]));
+                team2.add(new Block(j, 12 - i, BLOCK_WIDTH, BLOCK_HEIGHT, fullLvl[this.round - 1][1][i][j]));
             }
         }
+
+        // Screen is a 8 x 48 grid of the blocks
 
         myBouncer0 = new Bouncer(SCREEN_WIDTH/2 - BLOCK_WIDTH/2, BLOCK_HEIGHT*47, BLOCK_WIDTH, BLOCK_HEIGHT / 2, false, true);
         myBouncer0.setFill(Color.BLACK);
@@ -105,7 +106,7 @@ public class Level {
         myRoamer1 = new Bouncer(SCREEN_WIDTH/2 - BLOCK_WIDTH/2, BLOCK_HEIGHT*2, BLOCK_WIDTH, BLOCK_HEIGHT / 2, true, false);
         myRoamer1.setFill(Color.BLACK);
 
-        if(number >= 2) {
+        if(round >= 2) {
             myBouncer0.setSpeed(DOUBLE_SPEED);
             myBouncer1.setSpeed(DOUBLE_SPEED);
             myRoamer0.setSpeed(DOUBLE_SPEED);
@@ -114,7 +115,7 @@ public class Level {
 
         myBall = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
-        if(number >= 3) {
+        if(round >= 3) {
             myBall = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, DOUBLE_BALL);
         }
 
@@ -207,7 +208,7 @@ public class Level {
 
     public void keyInput(KeyCode code) {
 
-        if(number != 0 && number != 4) {
+        if(round != 0 && round != 4) {
             myBouncer0.handleKeys(code);
             myRoamer0.handleKeys(code);
             myBouncer1.handleKeys(code);

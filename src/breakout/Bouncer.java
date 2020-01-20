@@ -48,15 +48,7 @@ public class Bouncer extends Rectangle {
         return team;
     }
 
-    public int getSpeed(){
-        return myXSpeed;
-    }
-
     public void setSpeed(int speed){
         myXSpeed = speed;
-    }
-
-    public boolean isRoam() {
-        return roam;
     }
 }
