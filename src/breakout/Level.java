@@ -5,6 +5,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Level {
@@ -20,39 +21,13 @@ public class Level {
     public static final int SCREEN_HEIGHT = 768;
     public static final int BLOCK_WIDTH = SCREEN_WIDTH / 8;
     public static final int BLOCK_HEIGHT = SCREEN_HEIGHT / 48;
-    private int[][] lvlOneTeamOne = {
-            {2, 1, 4, 3, 3, 4, 1, 2},
-            {1, 4, 3, 2, 2, 3, 4, 1},
-            {4, 3, 2, 1, 1, 2, 3, 4}
-    };
 
-    private int[][] lvlOneTeamTwo = {
-            {4, 3, 2, 1, 1, 2, 3, 4},
-            {1, 4, 3, 2, 2, 3, 4, 1},
-            {2, 1, 4, 3, 3, 4, 1, 2}
-    };
-    private int[][] lvlTwoTeamOne = {
-            {1, 1, 1, 1, 1, 1, 1, 1},
-            {2, 2, 2, 2, 2, 2, 2, 2},
-            {4, 4, 4, 4, 4, 4, 4, 4}
-    };
-
-    private int[][] lvlTwoTeamTwo = {
-            {4, 4, 4, 4, 4, 4, 4, 4},
-            {2, 2, 2, 2, 2, 2, 2, 2},
-            {1, 1, 1, 1, 1, 1, 1, 1}
-    };
-    private int[][] lvlThreeTeamOne = {
-            {1, 4, 3, 2, 2, 3, 4, 1},
-            {4, 3, 2, 1, 1, 2, 3, 4},
-            {1, 4, 3, 2, 2, 3, 4, 1}
-    };
-
-    private int[][] lvlThreeTeamTwo = {
-            {1, 4, 3, 2, 2, 3, 4, 1},
-            {4, 3, 2, 1, 1, 2, 3, 4},
-            {1, 4, 3, 2, 2, 3, 4, 1}
-    };
+    private int[][] lvlOneTeamOne = FileReader.Reader("Resources/lvlOneTeamOne.txt");
+    private int[][] lvlOneTeamTwo = FileReader.Reader("Resources/lvlOneTeamTwo.txt");
+    private int[][] lvlTwoTeamOne = FileReader.Reader("Resources/lvlTwoTeamOne.txt");
+    private int[][] lvlTwoTeamTwo = FileReader.Reader("Resources/lvlTwoTeamTwo.txt");
+    private int[][] lvlThreeTeamOne = FileReader.Reader("Resources/lvlThreeTeamOne.txt");
+    private int[][] lvlThreeTeamTwo = FileReader.Reader("Resources/lvlThreeTeamOne.txt");
 
     private int[][][][] fullLvl = {
             {lvlOneTeamOne, lvlOneTeamTwo},
@@ -67,11 +42,11 @@ public class Level {
     private Bouncer myBouncer1;
     private Bouncer myRoamer1;
 
-    public Level (int level) {
+    public Level (int level) throws FileNotFoundException {
         round = level;
     }
 
-    public Level (int level, int winsOne, int winsTwo) {
+    public Level (int level, int winsOne, int winsTwo) throws FileNotFoundException {
         round = level;
         wins[0] = winsOne;
         wins[1] = winsTwo;

@@ -91,7 +91,7 @@ public class Ball extends Circle {
         } else if(code == KeyCode.O) {
             setCenterY(0);
         } else if(code == KeyCode.P) {
-            setCenterY(InitialScreen.SCREEN_HEIGHT);
+            setCenterY(InitialScreen.SCREEN_HEIGHT + InitialScreen.BLOCK_HEIGHT);
         }
     }
 

@@ -11,6 +11,8 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.FileNotFoundException;
+
 public class InitialScreen extends Application {
 
     private Scene myScene;
@@ -32,21 +34,27 @@ public class InitialScreen extends Application {
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
     @Override
-    public void start (Stage stage) {
+    public void start (Stage stage) throws FileNotFoundException {
         myScene = setupGame(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
         stage.setScene(myScene);
         stage.setTitle(TITLE);
         stage.show();
 
         // attach "game loop" to timeline to play it (basically just calling step() method repeatedly forever)
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY, stage));
+        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> {
+            try {
+                step(SECOND_DELAY, stage);
+            } catch (FileNotFoundException ex) {
+                //
+            }
+        });
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
     }
 
-    public Scene setupGame (int width, int height, Paint background){
+    public Scene setupGame (int width, int height, Paint background) throws FileNotFoundException {
 
         currLevel = new Level(level);
 
@@ -61,7 +69,7 @@ public class InitialScreen extends Application {
         return scene;
     }
 
-    private void step (double elapsedTime, Stage stage){
+    private void step (double elapsedTime, Stage stage) throws FileNotFoundException {
 
         stage.setScene(myScene);
         if(level < 4 && level != 0) {
