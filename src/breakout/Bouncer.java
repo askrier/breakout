@@ -18,9 +18,10 @@ public class Bouncer extends Rectangle {
 
     public void handleKeys(KeyCode code) {
         if(team) {
-            if (code == KeyCode.RIGHT) {
+            if (code == KeyCode.RIGHT) {            // Could likely implement as a switch block given more time
                 this.setX(this.getX() + myXSpeed);
                 if(this.getX() >= InitialScreen.SCREEN_WIDTH - InitialScreen.BLOCK_WIDTH / 2) this.setX(-1 * InitialScreen.BLOCK_WIDTH / 2);
+                // Above and the other similar blocks implement the teleporting from side-to-side aspect
             } else if (code == KeyCode.LEFT) {
                 this.setX(this.getX() - myXSpeed);
                 if(this.getX() <= -1 * InitialScreen.BLOCK_WIDTH / 2) this.setX(InitialScreen.SCREEN_WIDTH - InitialScreen.BLOCK_WIDTH / 2);

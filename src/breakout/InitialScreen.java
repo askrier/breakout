@@ -23,7 +23,7 @@ public class InitialScreen extends Application {
     private int newLevel = 0;
     private Group root;
     public static final String TITLE = "Defender";
-    public static final int SCREEN_WIDTH = 432;
+    public static final int SCREEN_WIDTH = 432;         // Same aspect proportions to an iPhone
     public static final int SCREEN_HEIGHT = 768;
     public static final int BLOCK_WIDTH = SCREEN_WIDTH / 8;
     public static final int BLOCK_HEIGHT = SCREEN_HEIGHT / 48;
@@ -56,9 +56,9 @@ public class InitialScreen extends Application {
 
     public Scene setupGame (int width, int height, Paint background) throws FileNotFoundException {
 
-        currLevel = new Level(level);
+        currLevel = new Level(level); // Updates the level
 
-        if(level >= 4) currLevel = new Level(level, winsOne, winsTwo);
+        if(level >= 4) currLevel = new Level(level, winsOne, winsTwo); // Triggers end of game and passes info
 
         root = currLevel.LevelBegin();
 
@@ -71,22 +71,22 @@ public class InitialScreen extends Application {
 
     private void step (double elapsedTime, Stage stage) throws FileNotFoundException {
 
-        stage.setScene(myScene);
+        stage.setScene(myScene); // Making sure it isn't one of the text slides
         if(level < 4 && level != 0) {
             newLevel = currLevel.levelStep(elapsedTime);
         }
 
-        if(level == 0) {
+        if(level == 0) { // Update works in tandem to sense the B press
             newLevel = currLevel.getNewLevel();
         }
 
-        if(newLevel != 0) {
+        if(newLevel != 0) { // Iterates to the next level
             if(newLevel == 1) winsOne++;
             if(newLevel == 2) winsTwo++;
             newLevel = 0;
             level++;
             if(level == 4) {
-                System.out.println(winsOne + " " + winsTwo);
+                //System.out.println(winsOne + " " + winsTwo);
                 currLevel.setWins(winsOne, winsTwo);
             }
             myScene = setupGame(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);

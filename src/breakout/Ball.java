@@ -27,14 +27,6 @@ public class Ball extends Circle {
         hasStart = false;
     }
 
-    public float getSpeed() {
-        return mySpeed;
-    }
-
-    public void setSpeed(int speed) {
-        mySpeed = speed;
-    }
-
     public float getXSpeed() {
         return myXSpeed;
     }
@@ -72,7 +64,7 @@ public class Ball extends Circle {
 
     public void handleKeys(KeyCode code) {
         if(!hasStart){
-            if (code == KeyCode.SPACE) {
+            if (code == KeyCode.SPACE) {    // Starts the game
                 myXSpeed = initSpeed;
                 myYSpeed = -1 * initSpeed;
                 hasStart = true;
@@ -85,17 +77,17 @@ public class Ball extends Circle {
             }
         }
 
-        if (code == KeyCode.V) {
+        if (code == KeyCode.V) {            // Cheat key, faster ball to test through
             myYSpeed = 500;
             myXSpeed = 500;
-        } else if(code == KeyCode.O) {
+        } else if(code == KeyCode.O) {      // Cheat key, damages all of one side or the other
             setCenterY(0);
         } else if(code == KeyCode.P) {
             setCenterY(InitialScreen.SCREEN_HEIGHT + InitialScreen.BLOCK_HEIGHT);
         }
     }
 
-    public void offScreen() {
+    public void offScreen() {               // Checks if the ball is off the screen and if so, resets to the middle
         if(this.getCenterY() <= 0 || this.getCenterY() >= InitialScreen.SCREEN_HEIGHT) {
             myXSpeed = 0;
             myYSpeed = 0;

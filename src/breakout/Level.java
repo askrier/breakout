@@ -10,14 +10,14 @@ import java.util.ArrayList;
 
 public class Level {
 
-    public int round;
+    public int round;                                       // Level #
     private int[] wins = {0, 0};
     private int newLevel = 0;
     private final int DOUBLE_SPEED = 48;
     private final int DOUBLE_BALL = 300;
     private ArrayList<Block> team1 = new ArrayList<>();
     private ArrayList<Block> team2 = new ArrayList<>();
-    public static final int SCREEN_WIDTH = 432;
+    public static final int SCREEN_WIDTH = 432;             // From initial screen
     public static final int SCREEN_HEIGHT = 768;
     public static final int BLOCK_WIDTH = SCREEN_WIDTH / 8;
     public static final int BLOCK_HEIGHT = SCREEN_HEIGHT / 48;
@@ -37,9 +37,9 @@ public class Level {
 
     private Ball myBall;
 
-    private Bouncer myBouncer0;
+    private Bouncer myBouncer0;         // Team one
     private Bouncer myRoamer0;
-    private Bouncer myBouncer1;
+    private Bouncer myBouncer1;         // Team two
     private Bouncer myRoamer1;
 
     public Level (int level) throws FileNotFoundException {
@@ -103,7 +103,7 @@ public class Level {
         root.getChildren().add(myRoamer1);
         root.getChildren().add(myBall);
 
-        return root;
+        return root;        // Return group to display
     }
 
     public int levelStep (double elapsedTime) {
@@ -118,7 +118,7 @@ public class Level {
 
         for(int i = team1.size() - 1; i >= 0; i--){
             team1.get(i).ballCollision(myBall);
-            if(team1.get(i).dur == 0) team1.remove(i);
+            if(team1.get(i).dur == 0) team1.remove(i);      // Gets rid of destroyed blocks
         }
         for(int i = team2.size() - 1; i >= 0; i--){
             team2.get(i).ballCollision(myBall);
@@ -127,7 +127,7 @@ public class Level {
 
         myBall.sideWallCollisions();
 
-        if(myBall.getCenterY() <= 0){
+        if(myBall.getCenterY() <= 0){                       // Implements barrier power-up
             for(int i = team2.size() - 1; i >= 0; i--){
                 team2.get(i).damage();
                 if(team2.get(i).dur == 0) team2.remove(i);
@@ -141,14 +141,14 @@ public class Level {
 
         myBall.offScreen();
 
-        if(team1.isEmpty()) return 2;
+        if(team1.isEmpty()) return 2;       // Returns if there is a winner for the round
         if(team2.isEmpty()) return 1;
         return 0;
     }
 
     private Group endOfGame() {
         String message = new String();
-        if(wins[0] > wins[1]) message = "Player one wins!";
+        if(wins[0] > wins[1]) message = "Player one wins!";     // Three rounds, no tie possible
         else message = "Player two wins!";
         Text text = new Text(SCREEN_WIDTH / 2 - BLOCK_WIDTH / 2, SCREEN_HEIGHT / 2, message);
         Group root = new Group();
@@ -183,7 +183,7 @@ public class Level {
 
     public void keyInput(KeyCode code) {
 
-        if(round != 0 && round != 4) {
+        if(round != 0 && round != 4) {      // Not allowed on menu & text slides
             myBouncer0.handleKeys(code);
             myRoamer0.handleKeys(code);
             myBouncer1.handleKeys(code);
@@ -191,7 +191,7 @@ public class Level {
             myBall.handleKeys(code);
         }
 
-        if(code == KeyCode.B) {
+        if(code == KeyCode.B) {         // Start game
             newLevel = 3;
         }
     }
