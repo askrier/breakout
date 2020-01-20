@@ -9,6 +9,7 @@ import javafx.scene.paint.Paint;
 public class Ball extends Circle {
 
     private float mySpeed = 24;
+    private float initSpeed = 150;
     private float myXSpeed;
     private float myYSpeed;
     private boolean hasStart;
@@ -17,6 +18,12 @@ public class Ball extends Circle {
 
     public Ball(int x_val, int y_val) {
         super(x_val, y_val, BALL_SIZE, ballColor);
+        hasStart = false;
+    }
+
+    public Ball(int x_val, int y_val, int speed) {
+        super(x_val, y_val, BALL_SIZE, ballColor);
+        initSpeed = speed;
         hasStart = false;
     }
 
@@ -66,19 +73,25 @@ public class Ball extends Circle {
     public void handleKeys(KeyCode code) {
         if(!hasStart){
             if (code == KeyCode.SPACE) {
-                myXSpeed = 150;
-                myYSpeed = -150;
+                myXSpeed = initSpeed;
+                myYSpeed = -1 * initSpeed;
                 hasStart = true;
             } else if (code == KeyCode.RIGHT) {
                 this.setCenterX(this.getCenterX() + mySpeed);
+                if(this.getCenterX() >= InitialScreen.SCREEN_WIDTH) this.setCenterX(0);
             } else if (code == KeyCode.LEFT) {
                 this.setCenterX(this.getCenterX() - mySpeed);
+                if(this.getCenterX() <= 0) this.setCenterX(InitialScreen.SCREEN_WIDTH);
             }
         }
 
         if (code == KeyCode.V) {
-            myYSpeed = -500;
+            myYSpeed = 500;
             myXSpeed = 500;
+        } else if(code == KeyCode.O) {
+            setCenterY(0);
+        } else if(code == KeyCode.P) {
+            setCenterY(InitialScreen.SCREEN_HEIGHT);
         }
     }
 

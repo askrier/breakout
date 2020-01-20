@@ -5,7 +5,8 @@ import javafx.scene.shape.Rectangle;
 
 public class Bouncer extends Rectangle {
 
-    private int mySpeed = 24;
+    private int myXSpeed = 24;
+    private int myYSpeed = 24;
     private boolean roam;
     private boolean team;
 
@@ -18,23 +19,27 @@ public class Bouncer extends Rectangle {
     public void handleKeys(KeyCode code) {
         if(team) {
             if (code == KeyCode.RIGHT) {
-                this.setX(this.getX() + mySpeed);
+                this.setX(this.getX() + myXSpeed);
+                if(this.getX() >= InitialScreen.SCREEN_WIDTH - InitialScreen.BLOCK_WIDTH / 2) this.setX(-1 * InitialScreen.BLOCK_WIDTH / 2);
             } else if (code == KeyCode.LEFT) {
-                this.setX(this.getX() - mySpeed);
+                this.setX(this.getX() - myXSpeed);
+                if(this.getX() <= -1 * InitialScreen.BLOCK_WIDTH / 2) this.setX(InitialScreen.SCREEN_WIDTH - InitialScreen.BLOCK_WIDTH / 2);
             } else if (code == KeyCode.UP && roam && this.getY() > (InitialScreen.SCREEN_HEIGHT / 2 + InitialScreen.BLOCK_HEIGHT)) {
-                this.setY(this.getY() - mySpeed);
-            } else if (code == KeyCode.DOWN && roam) {
-                this.setY(this.getY() + mySpeed);
+                this.setY(this.getY() - myYSpeed);
+            } else if (code == KeyCode.DOWN && roam && this.getY() < InitialScreen.SCREEN_HEIGHT - InitialScreen.BLOCK_HEIGHT) {
+                this.setY(this.getY() + myYSpeed);
             }
         } else {
             if (code == KeyCode.D) {
-                this.setX(this.getX() + mySpeed);
+                this.setX(this.getX() + myXSpeed);
+                if(this.getX() >= InitialScreen.SCREEN_WIDTH - InitialScreen.BLOCK_WIDTH / 2) this.setX(-1 * InitialScreen.BLOCK_WIDTH / 2);
             } else if (code == KeyCode.A) {
-                this.setX(this.getX() - mySpeed);
-            } else if (code == KeyCode.W && roam) {
-                this.setY(this.getY() - mySpeed);
+                this.setX(this.getX() - myXSpeed);
+                if(this.getX() <= -1 * InitialScreen.BLOCK_WIDTH / 2) this.setX(InitialScreen.SCREEN_WIDTH - InitialScreen.BLOCK_WIDTH / 2);
+            } else if (code == KeyCode.W && roam && this.getY() > InitialScreen.BLOCK_HEIGHT) {
+                this.setY(this.getY() - myYSpeed);
             } else if (code == KeyCode.S && roam && this.getY() < (InitialScreen.SCREEN_HEIGHT / 2 - InitialScreen.BLOCK_HEIGHT)) {
-                this.setY(this.getY() + mySpeed);
+                this.setY(this.getY() + myYSpeed);
             }
         }
     }
@@ -44,11 +49,11 @@ public class Bouncer extends Rectangle {
     }
 
     public int getSpeed(){
-        return mySpeed;
+        return myXSpeed;
     }
 
     public void setSpeed(int speed){
-        mySpeed = speed;
+        myXSpeed = speed;
     }
 
     public boolean isRoam() {
