@@ -12,6 +12,8 @@ in the player's half of the screen. The player is protecting their bricks that h
 passes by the baseline they are defending, each of their bricks take damage. The player to lose all of their bricks
 loses the round, there are three total rounds with different brick patterns. 
 
+![breakout diagram](doc/Breakout_Game_Diagram.png "Breakout Game Diagram")
+
 ### Design Flow
 
 The primary runner of this program is the InitialScreen class, this initializes and manages the screen for the user, 
