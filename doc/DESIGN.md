@@ -30,4 +30,13 @@ The Ball class extends a Circle class that manages the Ball's Block collisions, 
 area of play. This is also where the cheat keys are found. 'V' will speed the ball up, 'O' will damage all of one
 players' Blocks, and 'P' will damage all of the other players' Blocks. 
 
-The Level class is without a doubt the most convoluted class of all of these so far. First.
+The Level class is without a doubt the most convoluted class of all of these so far. First the class pulls in the 
+options for level design from files and consolidates them into a 4-D array. It also instantiates all of each team's 
+bouncers and the ball. Depending on what level number it has passed it adds all the proper objects to the group and 
+returns. The level also manages the steps of all the objects passed to it. It updates the ball location, checks for 
+all collisions, and checks if the ball leaves the screen and for end of level conditions. If level number is zero, this
+class initializes the opening message and waits for 'B' to be pressed. If the level number is four it displays the 
+winner according to which player had more wins in the end.
+
+### Assumptions Made
+
