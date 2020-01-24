@@ -40,3 +40,19 @@ winner according to which player had more wins in the end.
 
 ### Assumptions Made
 
+An assumption that I made was that each block would only need to handle being a Rectangle and its durability. This was
+prudent in some ways, but proved to be short-sighted in terms of powerups. Since all the block data was read from a file,
+I couldn't construct a reasonable way to select certain blocks to drop a catchable powerup. I instead implemented 
+powerups based on getting the ball past your opponent and advancing to further levels, which worked well enough, but 
+seemed to be a bit disingenuous. 
+
+I also assumed that the ball would only ever travel at 45 deg angles. This made implementing the ball really 
+straightforward, but implementing a more dynamic and precise bouncer proved to be impossible with this setup in place.
+
+### Immediate Improvements to Make
+
+In the Level class the first thing I would do is make sure the initial message on the start screen came from a file 
+instead of being hardcoded. I would also implement a system to handle multiple objects on the screen moving at the same 
+time. This would include making the moving objects a collection to iterate them all in the same calls. I would also 
+figure out how to extend the Block class to accommodate powerups that are different variants of either the Ball or 
+Circle classes. 
